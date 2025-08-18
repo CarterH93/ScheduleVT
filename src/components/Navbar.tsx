@@ -16,7 +16,7 @@ export default function Navbar() {
         <li className={styles.logo}>
           <Link to="/">
             <img src={logo} alt="website logo" />
-            <span>Template Website</span>
+            <span>Schedule VT</span>
           </Link>
         </li>
         {!user && (
