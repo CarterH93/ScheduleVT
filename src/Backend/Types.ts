@@ -1,3 +1,11 @@
+function getUniqueId() {
+  const timestamp = Date.now(); // ~13 digits
+  const array = new Uint32Array(1);
+  crypto.getRandomValues(array);
+  const random = array[0].toString().padStart(10, "0"); // 10 random digits
+  return Number(`${timestamp}${random.slice(0, 5)}`); // keep it within safe range
+}
+
 enum CourseType {
   Lecture = "Lecture",
   Lab = "Lab",
@@ -32,18 +40,12 @@ type ScheduleType = {
 };
 
 interface VTCourseStructure {
-  _name: string;
-  _id: number;
-  _schedule: ScheduleType;
-
   get id(): number;
   get name(): string;
   get schedule(): ScheduleType;
 }
 
 interface VTClassStructure {
-  _courses: VTCourseStructure[];
-  _name: string;
   get courses(): VTCourseStructure[];
   get id(): string;
 }
