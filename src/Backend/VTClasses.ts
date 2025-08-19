@@ -3,11 +3,21 @@ class VTClass implements VTClassStructure {
   private _subject: VTSubject;
   private _courseNumber: number;
   private _name: string;
-  constructor(subject: VTSubject, courseNumber: number, name: string) {
+  private _year: number;
+  private _semester: Semester;
+  constructor(
+    subject: VTSubject,
+    courseNumber: number,
+    name: string,
+    year: number,
+    semester: Semester
+  ) {
     this._subject = subject;
     this._courseNumber = courseNumber;
     this._name = name;
     this._courses = [];
+    this._year = year;
+    this._semester = semester;
   }
 
   public get courses(): VTCourse[] {
@@ -15,7 +25,7 @@ class VTClass implements VTClassStructure {
   }
 
   public addCourse(id: number): void {
-    const course = new VTCourse(id);
+    const course = new VTCourse(id, this._year, this._semester);
 
     if (this._courses.some((c) => c.id === course.id)) {
       throw new Error(`Course with id ${course.id} already exists.`);
@@ -72,18 +82,20 @@ class VTCourse implements VTCourseStructure {
   private _schedule: ScheduleType;
   private _type: CourseType;
 
-  constructor(id: number) {
+  constructor(id: number, year: number, semester: Semester) {
     this._id = id;
-
-    //TODO Set rest of the properties based on retrieval of data from api
-    //TEMP VALUES SET BELOW
-    this._name = "TEMP";
-    this._subject = VTSubject.AAD;
-    this._courseNumber = 0;
-    this._isFull = true;
-    this._professor = "TEMP";
-    this._schedule = {} as ScheduleType; // Default value added
-    this._type = CourseType.Other;
+    const course = getCRN(year, semester, id);
+    if (course) {
+      this._name = course.name;
+      this._subject = course.subject;
+      this._courseNumber = course.courseNumber;
+      this._isFull = course.isFull;
+      this._professor = course.professor;
+      this._schedule = course.schedule;
+      this._type = course.type;
+    } else {
+      throw new Error(`Course with id ${id} not found.`);
+    }
   }
 
   public get id(): number {
