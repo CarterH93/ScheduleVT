@@ -145,8 +145,13 @@ class CurrentSchedule implements VTClassStructure {
   }
 
   public addCourse(course: VTCourseStructure): void {
-    //TODO Check that newly added course does not interfere with other courses
-    this._courses.push(course);
+    if (doesNotInterfere(course, this.courses)) {
+      this._courses.push(course);
+    } else {
+      throw new Error(
+        `Course with id ${course.id} schedule interferes with existing courses schedules.`
+      );
+    }
   }
 
   public removeCourse(id: number) {

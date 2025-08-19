@@ -4,6 +4,7 @@ function getCRN(
   crn: number
 ): VTCourse | undefined {
   //TODO Finish function
+  //Look at python framework source code. Maybe ask chatgpt to refactor it to typescript.
   return undefined;
 }
 
