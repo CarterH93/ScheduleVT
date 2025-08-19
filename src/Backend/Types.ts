@@ -112,6 +112,21 @@ interface VTClassStructure {
 }
 
 /**
+ * Exception thrown when a request is invalid or cannot be processed.
+ * Extends the standard `Error` class to provide specific error handling for invalid requests.
+ */
+class InvalidRequestException extends Error {}
+
+/**
+ * Exception thrown when a search is invalid or cannot be processed.
+ * Extends the standard `Error` class to provide specific error handling for invalid requests.
+ */
+class InvalidSearchException extends Error {}
+
+
+
+
+/**
  * Represents the set of all Virginia Tech subject codes.
  * Each enum member corresponds to a unique subject abbreviation used in course listings.
  *
@@ -274,5 +289,5 @@ enum VTSubject {
   WATR = "WATR",
   WGS = "WGS",
 }
-export { getUniqueId, Semester, Day, VTSubject, CourseType };
+export { getUniqueId, Semester, Day, VTSubject, CourseType, InvalidRequestException, InvalidSearchException };
 export type { ClassTime, ScheduleType, VTCourseStructure, VTClassStructure };

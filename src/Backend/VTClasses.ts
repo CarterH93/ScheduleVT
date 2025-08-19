@@ -57,8 +57,8 @@ class VTClass implements VTClassStructure {
     return this._courses;
   }
 
-  public addCourse(id: number): void {
-    const course = new VTCourse(id, this._year, this._semester);
+  public async addCourse(id: number): Promise<void> {
+    const course = await getCRN(this._year, this._semester, id);
 
     if (this._courses.some((c) => c.id === course.id)) {
       throw new Error(`Course with id ${course.id} already exists.`);
@@ -102,30 +102,32 @@ class VTClass implements VTClassStructure {
   }
 }
 
+
 /**
- * Represents a Virginia Tech course with its associated details.
- *
- * The `VTCourse` class encapsulates information about a course, such as its name, subject, course number,
- * professor, schedule, type, and whether the course is full. It is constructed using a course ID, year,
- * and semester, and retrieves course data using the `getCRN` function.
+ * Represents a Virginia Tech course with its associated metadata.
  *
  * @implements VTCourseStructure
  *
- * @remarks
- * Throws an error if the course with the specified ID is not found.
+ * @property {string} _name - The name of the course.
+ * @property {number} _id - The unique identifier for the course.
+ * @property {VTSubject} _subject - The subject area of the course.
+ * @property {number} _courseNumber - The course number.
+ * @property {boolean} _isFull - Indicates if the course is currently full.
+ * @property {string} _professor - The name of the professor teaching the course.
+ * @property {ScheduleType} _schedule - The schedule information for the course.
+ * @property {CourseType} _type - The type/category of the course.
  *
- * @param id - The unique identifier for the course.
- * @param year - The academic year for the course.
- * @param semester - The semester in which the course is offered.
- *
- * @property id - The unique identifier for the course.
- * @property subject - The subject of the course.
- * @property courseNumber - The course number.
- * @property name - The name of the course.
- * @property isFull - Indicates if the course is full.
- * @property professor - The name of the professor teaching the course.
- * @property schedule - The schedule information for the course.
- * @property type - The type of the course.
+ * @constructor
+ * @param {string} name - The name of the course.
+ * @param {number} id - The unique identifier for the course.
+ * @param {number} year - The academic year for the course.
+ * @param {Semester} semester - The semester in which the course is offered.
+ * @param {VTSubject} subject - The subject area of the course.
+ * @param {number} courseNumber - The course number.
+ * @param {boolean} isFull - Indicates if the course is currently full.
+ * @param {string} professor - The name of the professor teaching the course.
+ * @param {ScheduleType} schedule - The schedule information for the course.
+ * @param {CourseType} type - The type/category of the course.
  */
 class VTCourse implements VTCourseStructure {
   private _name: string;
@@ -137,20 +139,26 @@ class VTCourse implements VTCourseStructure {
   private _schedule: ScheduleType;
   private _type: CourseType;
 
-  constructor(id: number, year: number, semester: Semester) {
+  constructor(
+    name: string,
+    id: number,
+    year: number,
+    semester: Semester,
+    subject: VTSubject,
+    courseNumber: number,
+    isFull: boolean,
+    professor: string,
+    schedule: ScheduleType,
+    type: CourseType
+  ) {
     this._id = id;
-    const course = getCRN(year, semester, id);
-    if (course) {
-      this._name = course.name;
-      this._subject = course.subject;
-      this._courseNumber = course.courseNumber;
-      this._isFull = course.isFull;
-      this._professor = course.professor;
-      this._schedule = course.schedule;
-      this._type = course.type;
-    } else {
-      throw new Error(`Course with id ${id} not found.`);
-    }
+    this._name = name;
+    this._subject = subject;
+    this._courseNumber = courseNumber;
+    this._isFull = isFull;
+    this._professor = professor;
+    this._schedule = schedule;
+    this._type = type;
   }
 
   public get id(): number {
