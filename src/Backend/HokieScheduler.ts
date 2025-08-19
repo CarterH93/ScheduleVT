@@ -1,3 +1,5 @@
+import { VTClassStructure, VTCourseStructure, ScheduleType, ClassTime } from "./Types";
+
 //TODO Write documentation
 class HokieScheduler {
   private VTClasses: Set<VTClassStructure>;
@@ -51,3 +53,5 @@ function doesNotInterfere(
     //TODO Finish function
     return true;
   }
+
+  export { HokieScheduler, doesNotInterfere };

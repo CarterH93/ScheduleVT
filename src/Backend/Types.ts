@@ -10,7 +10,6 @@ function getUniqueId() {
   return Number(`${timestamp}${random.slice(0, 5)}`); // keep it within safe range
 }
 
-
 /**
  * Represents the different types of courses available.
  *
@@ -32,10 +31,10 @@ enum CourseType {
 
 /**
  * Represents the academic semester options.
- * 
+ *
  * @remarks
  * Used to specify the semester for scheduling or course assignments.
- * 
+ *
  * @enum {string}
  * @property {string} Fall - The fall semester.
  * @property {string} Spring - The spring semester.
@@ -51,7 +50,7 @@ enum Semester {
 
 /**
  * Represents the days of the week.
- * 
+ *
  * @remarks
  * This enum is used to specify a particular day, with each member corresponding to a day from Monday to Sunday.
  */
@@ -75,7 +74,6 @@ type ClassTime = {
   start: Date;
   end: Date;
 };
-
 
 /**
  * Represents a schedule mapping each day to a set of class times for a single class.
@@ -276,3 +274,5 @@ enum VTSubject {
   WATR = "WATR",
   WGS = "WGS",
 }
+export { getUniqueId, Semester, Day, VTSubject, CourseType };
+export type { ClassTime, ScheduleType, VTCourseStructure, VTClassStructure };

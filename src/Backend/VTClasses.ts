@@ -1,3 +1,15 @@
+import {
+  VTSubject,
+  Semester,
+  VTClassStructure,
+  VTCourseStructure,
+  ScheduleType,
+  CourseType,
+  getUniqueId,
+} from "./Types";
+import { getCRN } from "./VTTimetableAPI";
+import { doesNotInterfere } from "./HokieScheduler";
+
 /**
  * Represents a Virginia Tech class, encapsulating its subject, course number, year, semester, and associated courses.
  *
@@ -88,7 +100,6 @@ class VTClass implements VTClassStructure {
   public get courseNumber(): number {
     return this._courseNumber;
   }
-
 }
 
 /**
@@ -177,12 +188,12 @@ class VTCourse implements VTCourseStructure {
 
 /**
  * Represents the user's past current schedule containing a collection of courses.
- * 
+ *
  * @implements {VTClassStructure}
- * 
+ *
  * @remarks
  * This is used for the user to add breaks and existing courses to their schedule separately from the new classes they are trying to add.
- * 
+ *
  * @example
  * ```typescript
  * const schedule = new CurrentSchedule();
@@ -265,3 +276,4 @@ class VTBreak implements VTCourseStructure {
     return this._schedule;
   }
 }
+export { VTClass, VTCourse, CurrentSchedule, VTBreak };
