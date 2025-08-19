@@ -1,3 +1,7 @@
+/**
+ * Creates a unique identifier with only numbers
+ * @returns Unique number identifier
+ */
 function getUniqueId() {
   const timestamp = Date.now(); // ~13 digits
   const array = new Uint32Array(1);
@@ -6,6 +10,19 @@ function getUniqueId() {
   return Number(`${timestamp}${random.slice(0, 5)}`); // keep it within safe range
 }
 
+
+/**
+ * Represents the different types of courses available.
+ *
+ * @remarks
+ * This enum is used to categorize courses by their type
+ *
+ * @enum {string}
+ * @property {string} Lecture - Traditional in-person lecture.
+ * @property {string} Lab - Hands-on laboratory session.
+ * @property {string} Online - Course delivered online.
+ * @property {string} Other - Any other type of course not listed above.
+ */
 enum CourseType {
   Lecture = "Lecture",
   Lab = "Lab",
@@ -13,6 +30,18 @@ enum CourseType {
   Other = "Other",
 }
 
+/**
+ * Represents the academic semester options.
+ * 
+ * @remarks
+ * Used to specify the semester for scheduling or course assignments.
+ * 
+ * @enum {string}
+ * @property {string} Fall - The fall semester.
+ * @property {string} Spring - The spring semester.
+ * @property {string} Summer - The summer semester.
+ * @property {string} Winter - The winter semester.
+ */
 enum Semester {
   Fall = "Fall",
   Spring = "Spring",
@@ -20,6 +49,12 @@ enum Semester {
   Winter = "Winter",
 }
 
+/**
+ * Represents the days of the week.
+ * 
+ * @remarks
+ * This enum is used to specify a particular day, with each member corresponding to a day from Monday to Sunday.
+ */
 enum Day {
   Monday = "Monday",
   Tuesday = "Tuesday",
@@ -30,26 +65,66 @@ enum Day {
   Sunday = "Sunday",
 }
 
+/**
+ * Represents the start and end times for a class session.
+ *
+ * @property start - The starting time of the class.
+ * @property end - The ending time of the class.
+ */
 type ClassTime = {
   start: Date;
   end: Date;
 };
 
+
+/**
+ * Represents a schedule mapping each day to a set of class times for a single class.
+ *
+ * @template Day - The type representing days of the week or scheduling period.
+ * @template ClassTime - The type representing a specific class time.
+ *
+ * Each key in the object corresponds to a day, and its value is a set containing all class times scheduled for that day.
+ */
 type ScheduleType = {
-  Day: Set<ClassTime>;
+  [key in Day]: Set<ClassTime>;
 };
 
+/**
+ * Represents the structure of a VT course, including its unique identifier, name, and schedule.
+ *
+ * @property {number} id - The unique identifier for the course.
+ * @property {string} name - The name of the course.
+ * @property {ScheduleType} schedule - The schedule associated with the course.
+ */
 interface VTCourseStructure {
   get id(): number;
   get name(): string;
   get schedule(): ScheduleType;
 }
 
+/**
+ * Represents the structure of a VT class, providing access to its courses and unique identifier.
+ *
+ * @property {VTCourseStructure[]} courses - An array of course structures associated with the class.
+ * @property {string} id - The unique identifier for the class.
+ */
 interface VTClassStructure {
   get courses(): VTCourseStructure[];
   get id(): string;
 }
 
+/**
+ * Represents the set of all Virginia Tech subject codes.
+ * Each enum member corresponds to a unique subject abbreviation used in course listings.
+ *
+ * @remarks
+ * This enum is useful for type-safe handling of subject codes throughout the application.
+ *
+ * @example
+ * ```typescript
+ * const subject: VTSubject = VTSubject.CS; // "CS"
+ * ```
+ */
 enum VTSubject {
   AAD = "AAD",
   AAEC = "AAEC",

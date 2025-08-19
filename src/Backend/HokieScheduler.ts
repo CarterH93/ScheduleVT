@@ -1,3 +1,4 @@
+//TODO Write documentation
 class HokieScheduler {
   private VTClasses: Set<VTClassStructure>;
   private courseCombinations: Set<ReadonlySet<VTCourseStructure>>;

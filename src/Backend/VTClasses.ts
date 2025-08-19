@@ -1,20 +1,41 @@
+/**
+ * Represents a Virginia Tech class, encapsulating its subject, course number, year, semester, and associated courses.
+ *
+ * @remarks
+ * This class manages a collection of `VTCourse` instances that share the same subject and course number.
+ * It provides methods to add and remove courses, and generates a unique identifier based on the sorted course IDs.
+ *
+ * @implements VTClassStructure
+ *
+ * @example
+ * ```typescript
+ * const vtClass = new VTClass("CS", 1114, 2024, Semester.Fall);
+ * vtClass.addCourse(12345);
+ * vtClass.removeCourse(12345);
+ * ```
+ *
+ * @property {VTCourse[]} courses - The list of courses associated with this class.
+ * @property {string} id - A unique identifier for the class, generated from the course IDs.
+ * @property {VTSubject} subject - The subject of the class.
+ * @property {number} courseNumber - The course number.
+ *
+ * @method addCourse - Adds a new course to the class, ensuring subject and course number match.
+ * @method removeCourse - Removes a course from the class by its ID.
+ */
 class VTClass implements VTClassStructure {
   private _courses: VTCourse[];
   private _subject: VTSubject;
   private _courseNumber: number;
-  private _name: string;
   private _year: number;
   private _semester: Semester;
   constructor(
     subject: VTSubject,
     courseNumber: number,
-    name: string,
     year: number,
     semester: Semester
   ) {
     this._subject = subject;
     this._courseNumber = courseNumber;
-    this._name = name;
     this._courses = [];
     this._year = year;
     this._semester = semester;
@@ -48,6 +69,7 @@ class VTClass implements VTClassStructure {
   }
 
   public get id(): string {
+    //TODO Verify with tests that this actually works as intended
     // Create a hash from the sorted course ids
     const ids = this._courses.map((c) => c.id).sort((a, b) => a - b);
     const str = ids.join("-");
@@ -67,11 +89,33 @@ class VTClass implements VTClassStructure {
     return this._courseNumber;
   }
 
-  public get name(): string {
-    return this._name;
-  }
 }
 
+/**
+ * Represents a Virginia Tech course with its associated details.
+ *
+ * The `VTCourse` class encapsulates information about a course, such as its name, subject, course number,
+ * professor, schedule, type, and whether the course is full. It is constructed using a course ID, year,
+ * and semester, and retrieves course data using the `getCRN` function.
+ *
+ * @implements VTCourseStructure
+ *
+ * @remarks
+ * Throws an error if the course with the specified ID is not found.
+ *
+ * @param id - The unique identifier for the course.
+ * @param year - The academic year for the course.
+ * @param semester - The semester in which the course is offered.
+ *
+ * @property id - The unique identifier for the course.
+ * @property subject - The subject of the course.
+ * @property courseNumber - The course number.
+ * @property name - The name of the course.
+ * @property isFull - Indicates if the course is full.
+ * @property professor - The name of the professor teaching the course.
+ * @property schedule - The schedule information for the course.
+ * @property type - The type of the course.
+ */
 class VTCourse implements VTCourseStructure {
   private _name: string;
   private _id: number;
@@ -131,6 +175,21 @@ class VTCourse implements VTCourseStructure {
   }
 }
 
+/**
+ * Represents the user's past current schedule containing a collection of courses.
+ * 
+ * @implements {VTClassStructure}
+ * 
+ * @remarks
+ * This is used for the user to add breaks and existing courses to their schedule separately from the new classes they are trying to add.
+ * 
+ * @example
+ * ```typescript
+ * const schedule = new CurrentSchedule();
+ * schedule.addCourse(course);
+ * schedule.removeCourse(courseId);
+ * ```
+ */
 class CurrentSchedule implements VTClassStructure {
   private _courses: VTCourseStructure[];
   private _id: string;
@@ -163,6 +222,26 @@ class CurrentSchedule implements VTClassStructure {
   }
 }
 
+/**
+ * Represents a break period within a course schedule.
+ * Implements the {@link VTCourseStructure} interface.
+ *
+ * @remarks
+ * A VTBreak is used to define non-instructional periods such as lunch breaks or free periods.
+ * Breaks can only be added to the user's current schedule
+ *
+ * @example
+ * ```typescript
+ * const lunchBreak = new VTBreak("Lunch", lunchSchedule);
+ * ```
+ *
+ * @param name - The name of the break.
+ * @param schedule - The schedule details for the break.
+ *
+ * @property id - The unique identifier for the break.
+ * @property name - The name of the break.
+ * @property schedule - The schedule information for the break.
+ */
 class VTBreak implements VTCourseStructure {
   private _name: string;
   private _id: number;

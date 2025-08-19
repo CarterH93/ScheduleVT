@@ -1,3 +1,4 @@
+//TODO Write documentation
 function getCRN(
   year: number,
   semester: Semester,
