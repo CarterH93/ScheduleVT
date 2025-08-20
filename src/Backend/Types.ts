@@ -42,10 +42,10 @@ enum CourseType {
  * @property {string} Winter - The winter semester.
  */
 enum Semester {
-  Fall = "Fall",
-  Spring = "Spring",
-  Summer = "Summer",
-  Winter = "Winter",
+  Fall = "09",
+  Spring = "01",
+  Summer = "06",
+  Winter = "12",
 }
 
 /**
@@ -110,21 +110,6 @@ interface VTClassStructure {
   get courses(): VTCourseStructure[];
   get id(): string;
 }
-
-/**
- * Exception thrown when a request is invalid or cannot be processed.
- * Extends the standard `Error` class to provide specific error handling for invalid requests.
- */
-class InvalidRequestException extends Error {}
-
-/**
- * Exception thrown when a search is invalid or cannot be processed.
- * Extends the standard `Error` class to provide specific error handling for invalid requests.
- */
-class InvalidSearchException extends Error {}
-
-
-
 
 /**
  * Represents the set of all Virginia Tech subject codes.
@@ -289,5 +274,11 @@ enum VTSubject {
   WATR = "WATR",
   WGS = "WGS",
 }
-export { getUniqueId, Semester, Day, VTSubject, CourseType, InvalidRequestException, InvalidSearchException };
+export {
+  getUniqueId,
+  Semester,
+  Day,
+  VTSubject,
+  CourseType,
+};
 export type { ClassTime, ScheduleType, VTCourseStructure, VTClassStructure };
