@@ -1,3 +1,65 @@
+class HourMinute {
+  private totalMinutes: number;
+
+  constructor(hour: number, minute: number, meridian: string) {
+    if (meridian) {
+      if (hour < 1 || hour > 12) {
+        throw new Error("Hour must be between 1 and 12 when using AM/PM");
+      }
+      if (minute < 0 || minute > 59) {
+        throw new Error("Minute must be between 0 and 59");
+      }
+      // Convert AM/PM to 24-hour
+      if (meridian === "AM") {
+        hour = hour % 12; // 12 AM → 0
+      } else {
+        hour = (hour % 12) + 12; // 12 PM → 12, 1 PM → 13
+      }
+    } else {
+      if (hour < 0 || hour > 23) {
+        throw new Error("Hour must be between 0 and 23");
+      }
+      if (minute < 0 || minute > 59) {
+        throw new Error("Minute must be between 0 and 59");
+      }
+    }
+
+    this.totalMinutes = hour * 60 + minute;
+  }
+
+  compare(other: HourMinute): number {
+    return this.totalMinutes - other.totalMinutes;
+  }
+
+  isBefore(other: HourMinute): boolean {
+    return this.compare(other) < 0;
+  }
+
+  isAfter(other: HourMinute): boolean {
+    return this.compare(other) > 0;
+  }
+
+  isEqual(other: HourMinute): boolean {
+    return this.compare(other) === 0;
+  }
+
+  toString(use12Hour: boolean = false): string {
+    if (!use12Hour) {
+      const hh = String(Math.floor(this.totalMinutes / 60)).padStart(2, "0");
+      const mm = String(this.totalMinutes % 60).padStart(2, "0");
+      return `${hh}:${mm}`;
+    } else {
+      let hour = Math.floor(this.totalMinutes / 60);
+      const minute = this.totalMinutes % 60;
+      const meridian = hour >= 12 ? "PM" : "AM";
+      hour = hour % 12 || 12; // 0 → 12 AM, 12 → 12 PM
+      return `${hour}:${String(minute).padStart(2, "0")} ${meridian}`;
+    }
+  }
+}
+
+
+
 /**
  * Creates a unique identifier with only numbers
  * @returns Unique number identifier
@@ -10,22 +72,14 @@ function getUniqueId() {
   return Number(`${timestamp}${random.slice(0, 5)}`); // keep it within safe range
 }
 
-/**
- * Represents the different types of courses available.
- *
- * @remarks
- * This enum is used to categorize courses by their type
- *
- * @enum {string}
- * @property {string} Lecture - Traditional in-person lecture.
- * @property {string} Lab - Hands-on laboratory session.
- * @property {string} Online - Course delivered online.
- * @property {string} Other - Any other type of course not listed above.
- */
+
 enum CourseType {
   Lecture = "Lecture",
   Lab = "Lab",
-  Online = "Online",
+  Online = "ONLINE COURSE",
+  IndependentStudy = "Independent Study",
+  Recitation = "Recitation",
+  Research = "Research",
   Other = "Other",
 }
 
@@ -62,6 +116,7 @@ enum Day {
   Friday = "Friday",
   Saturday = "Saturday",
   Sunday = "Sunday",
+  Arranged = "Arranged"
 }
 
 /**
@@ -71,8 +126,8 @@ enum Day {
  * @property end - The ending time of the class.
  */
 type ClassTime = {
-  start: Date;
-  end: Date;
+  start: HourMinute;
+  end: HourMinute;
 };
 
 /**
@@ -274,11 +329,5 @@ enum VTSubject {
   WATR = "WATR",
   WGS = "WGS",
 }
-export {
-  getUniqueId,
-  Semester,
-  Day,
-  VTSubject,
-  CourseType,
-};
+export { getUniqueId, Semester, Day, VTSubject, CourseType, HourMinute };
 export type { ClassTime, ScheduleType, VTCourseStructure, VTClassStructure };

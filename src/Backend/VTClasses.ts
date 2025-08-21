@@ -57,9 +57,7 @@ class VTClass implements VTClassStructure {
     return this._courses;
   }
 
-  public async addCourse(id: number): Promise<void> {
-    const course = await getCRN(this._year, this._semester, id);
-
+  public addCourse(course: VTCourse): void {
     if (this._courses.some((c) => c.id === course.id)) {
       throw new Error(`Course with id ${course.id} already exists.`);
     }
@@ -113,7 +111,6 @@ class VTClass implements VTClassStructure {
  * @property {VTSubject} _subject - The subject area of the course.
  * @property {number} _courseNumber - The course number.
  * @property {boolean} _isFull - Indicates if the course is currently full.
- * @property {string} _professor - The name of the professor teaching the course.
  * @property {ScheduleType} _schedule - The schedule information for the course.
  * @property {CourseType} _type - The type/category of the course.
  *
@@ -124,8 +121,6 @@ class VTClass implements VTClassStructure {
  * @param {Semester} semester - The semester in which the course is offered.
  * @param {VTSubject} subject - The subject area of the course.
  * @param {number} courseNumber - The course number.
- * @param {boolean} isFull - Indicates if the course is currently full.
- * @param {string} professor - The name of the professor teaching the course.
  * @param {ScheduleType} schedule - The schedule information for the course.
  * @param {CourseType} type - The type/category of the course.
  */
@@ -134,8 +129,6 @@ class VTCourse implements VTCourseStructure {
   private _id: number;
   private _subject: VTSubject;
   private _courseNumber: number;
-  private _isFull: boolean;
-  private _professor: string;
   private _schedule: ScheduleType;
   private _type: CourseType;
 
@@ -146,8 +139,6 @@ class VTCourse implements VTCourseStructure {
     semester: Semester,
     subject: VTSubject,
     courseNumber: number,
-    isFull: boolean,
-    professor: string,
     schedule: ScheduleType,
     type: CourseType
   ) {
@@ -155,8 +146,6 @@ class VTCourse implements VTCourseStructure {
     this._name = name;
     this._subject = subject;
     this._courseNumber = courseNumber;
-    this._isFull = isFull;
-    this._professor = professor;
     this._schedule = schedule;
     this._type = type;
   }
@@ -177,13 +166,6 @@ class VTCourse implements VTCourseStructure {
     return this._name;
   }
 
-  public get isFull(): boolean {
-    return this._isFull;
-  }
-
-  public get professor(): string {
-    return this._professor;
-  }
 
   public get schedule(): ScheduleType {
     return this._schedule;
