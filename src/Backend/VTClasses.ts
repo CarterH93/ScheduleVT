@@ -7,7 +7,6 @@ import {
   CourseType,
   getUniqueId,
 } from "./Types";
-import { getCRN } from "./VTTimetableAPI";
 import { doesNotInterfere } from "./HokieScheduler";
 
 /**
@@ -100,30 +99,6 @@ class VTClass implements VTClassStructure {
   }
 }
 
-
-/**
- * Represents a Virginia Tech course with its associated metadata.
- *
- * @implements VTCourseStructure
- *
- * @property {string} _name - The name of the course.
- * @property {number} _id - The unique identifier for the course.
- * @property {VTSubject} _subject - The subject area of the course.
- * @property {number} _courseNumber - The course number.
- * @property {boolean} _isFull - Indicates if the course is currently full.
- * @property {ScheduleType} _schedule - The schedule information for the course.
- * @property {CourseType} _type - The type/category of the course.
- *
- * @constructor
- * @param {string} name - The name of the course.
- * @param {number} id - The unique identifier for the course.
- * @param {number} year - The academic year for the course.
- * @param {Semester} semester - The semester in which the course is offered.
- * @param {VTSubject} subject - The subject area of the course.
- * @param {number} courseNumber - The course number.
- * @param {ScheduleType} schedule - The schedule information for the course.
- * @param {CourseType} type - The type/category of the course.
- */
 class VTCourse implements VTCourseStructure {
   private _name: string;
   private _id: number;
@@ -173,6 +148,12 @@ class VTCourse implements VTCourseStructure {
 
   public get type(): CourseType {
     return this._type;
+  }
+
+  public get stringSchedule(): string {
+    //TODO implement this method
+    //Creates a string representation of the schedule
+    throw new Error("Method not implemented.");
   }
 }
 

@@ -135,7 +135,6 @@ async function searchTimetable(
     return []; // Return empty array if no results found
   }
 
-  console.log(response);
 
   //parse html
   return parseHtmlCourses(response, year, semester);
@@ -190,7 +189,6 @@ export function parseHtmlCourses(
             (cell) => cell.textContent?.trim() || ""
           )
         : null;
-      console.log(timeTableData, extraClassData);
 
       //Parse through timeTableData and extraClassData
 
@@ -260,7 +258,6 @@ export function parseHtmlCourses(
       };
 
       for (const day of mainDays) {
-        console.log(day);
         const convertedDay = convertToProperDay(day);
 
         schedule[convertedDay].add(mainClassTime);
@@ -286,7 +283,6 @@ export function parseHtmlCourses(
         };
 
         for (const day of additionalDays) {
-          console.log(day);
           const convertedDay = convertToProperDay(day);
 
           schedule[convertedDay].add(additionalClassTime);
@@ -308,7 +304,6 @@ export function parseHtmlCourses(
     }
   }
 
-  console.log(courseList);
   return courseList;
 }
 

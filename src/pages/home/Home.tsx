@@ -17,7 +17,7 @@ export default function Home() {
     // console.log(CS);
     //console.log(CS.id);
 
-    console.log(getClass(2025, Semester.Fall, VTSubject.CS, 1114));
+   
     //console.log("final");
     //console.log(getCRN(2025, Semester.Fall, 83455));
   }
