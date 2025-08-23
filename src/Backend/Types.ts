@@ -32,15 +32,11 @@ class HourMinute {
   }
 
   isBefore(other: HourMinute): boolean {
-    return this.compare(other) < 0;
+    return this.compare(other) <= 0;
   }
 
   isAfter(other: HourMinute): boolean {
-    return this.compare(other) > 0;
-  }
-
-  isEqual(other: HourMinute): boolean {
-    return this.compare(other) === 0;
+    return this.compare(other) >= 0;
   }
 
   toString(use12Hour: boolean = false): string {
@@ -58,8 +54,6 @@ class HourMinute {
   }
 }
 
-
-
 /**
  * Creates a unique identifier with only numbers
  * @returns Unique number identifier
@@ -71,7 +65,6 @@ function getUniqueId() {
   const random = array[0].toString().padStart(10, "0"); // 10 random digits
   return Number(`${timestamp}${random.slice(0, 5)}`); // keep it within safe range
 }
-
 
 enum CourseType {
   Lecture = "Lecture",
@@ -116,7 +109,7 @@ enum Day {
   Friday = "Friday",
   Saturday = "Saturday",
   Sunday = "Sunday",
-  Arranged = "Arranged"
+  Arranged = "Arranged",
 }
 
 /**

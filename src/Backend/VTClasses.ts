@@ -7,7 +7,6 @@ import {
   CourseType,
   getUniqueId,
 } from "./Types";
-import { doesNotInterfere } from "./HokieScheduler";
 
 /**
  * Represents a Virginia Tech class, encapsulating its subject, course number, year, semester, and associated courses.
@@ -78,7 +77,6 @@ class VTClass implements VTClassStructure {
   }
 
   public get id(): string {
-    //TODO Verify with tests that this actually works as intended
     // Create a hash from the sorted course ids
     const ids = this._courses.map((c) => c.id).sort((a, b) => a - b);
     const str = ids.join("-");
@@ -186,13 +184,7 @@ class CurrentSchedule implements VTClassStructure {
   }
 
   public addCourse(course: VTCourseStructure): void {
-    if (doesNotInterfere(course, this.courses)) {
-      this._courses.push(course);
-    } else {
-      throw new Error(
-        `Course with id ${course.id} schedule interferes with existing courses schedules.`
-      );
-    }
+    this._courses.push(course);
   }
 
   public removeCourse(id: number) {
