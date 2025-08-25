@@ -9,6 +9,7 @@ import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import Signup from "./pages/signup/Signup";
 import Navbar from "./components/Navbar";
+import Favorites from "./pages/favorites/Favorites";
 
 function App() {
   const { user, authIsReady } = useAuthContext();
@@ -32,6 +33,10 @@ function App() {
             <Route
               path="/signup"
               element={user ? <Navigate to="/" /> : <Signup />}
+            />
+            <Route
+              path="/favorites"
+              element={user ? <Favorites /> : <Navigate to="/login" />}
             />
           </Routes>
         </BrowserRouter>

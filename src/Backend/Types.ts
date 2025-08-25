@@ -52,6 +52,10 @@ class HourMinute {
       return `${hour}:${String(minute).padStart(2, "0")} ${meridian}`;
     }
   }
+
+  get time(): number {
+    return this.totalMinutes / 60;
+  }
 }
 
 /**
@@ -93,6 +97,21 @@ enum Semester {
   Spring = "01",
   Summer = "06",
   Winter = "12",
+}
+
+function semesterToString(sem: Semester): string {
+  switch (sem) {
+    case Semester.Fall:
+      return "Fall";
+    case Semester.Spring:
+      return "Spring";
+    case Semester.Summer:
+      return "Summer";
+    case Semester.Winter:
+      return "Winter";
+    default:
+      return "Unknown Semester";
+  }
 }
 
 /**
@@ -322,5 +341,5 @@ enum VTSubject {
   WATR = "WATR",
   WGS = "WGS",
 }
-export { getUniqueId, Semester, Day, VTSubject, CourseType, HourMinute };
+export { getUniqueId, Semester, Day, VTSubject, CourseType, HourMinute, semesterToString };
 export type { ClassTime, ScheduleType, VTCourseStructure, VTClassStructure };

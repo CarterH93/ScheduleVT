@@ -1,13 +1,22 @@
 import React from "react";
-import { HokieScheduler } from "../../Backend/HokieScheduler";
+import { currentTerm, HokieScheduler } from "../../Backend/HokieScheduler";
 import {
   CurrentSchedule,
   VTBreak,
   VTClass,
   VTCourse,
 } from "../../Backend/VTClasses";
-import { HourMinute, Semester, VTSubject } from "../../Backend/Types";
+import {
+  HourMinute,
+  Semester,
+  semesterToString,
+  VTSubject,
+} from "../../Backend/Types";
 import { getCRN } from "../../Backend/VTTimetableAPI";
+import Calendar from "../../components/Calendar";
+import NewClassList from "../../components/NewClassList";
+import ScheduleOption from "../../components/ScheduleOption";
+import styles from "./Home.module.css";
 
 export default function Home() {
   async function handleClick(
@@ -26,7 +35,7 @@ export default function Home() {
     CS.addCourse(await getCRN(2025, Semester.Fall, 83492));
     CS.addCourse(await getCRN(2025, Semester.Fall, 83493));
     CS.addCourse(await getCRN(2025, Semester.Fall, 83495));
-    
+
     scheduler.addClass(CS);
 
     const MATH = new VTClass(VTSubject.MATH, 2534, 2025, Semester.Fall);
@@ -87,17 +96,122 @@ export default function Home() {
 
     scheduler.addCurrentSchedule(currentSchedule);
 
-    console.log("id list")
-    console.log(CS.id)
-    console.log(MATH.id)
+    console.log("id list");
+    console.log(CS.id);
+    console.log(MATH.id);
 
-
-    const final = scheduler.createSchedules()
+    const final = scheduler.createSchedules();
     console.log(final);
   }
 
   return (
-    <div>
+    <div className={styles.page}>
+      <p>
+        Term: {semesterToString(currentTerm.semester)} {currentTerm.year}
+      </p>
+      <p>Refresh page to reset data</p>
+      <h1>Create New Schedule</h1>
+      <div className={styles.home}>
+        <div className={styles.sidebyside}>
+          <h2>Current Schedule</h2>
+          <button>Add CRN</button>
+          <button>Add Break</button>
+        </div>
+        <Calendar
+          courses={[
+            new VTBreak("No afternoons", {
+              Monday: new Set([
+                {
+                  start: new HourMinute(4, 10, "PM"),
+                  end: new HourMinute(6, 0, "PM"),
+                },
+              ]),
+              Tuesday: new Set([]),
+              Wednesday: new Set([]),
+              Thursday: new Set([]),
+              Friday: new Set([]),
+              Saturday: new Set([]),
+              Sunday: new Set([]),
+              Arranged: new Set([]),
+            }),
+            new VTBreak("8 ams", {
+              Monday: new Set([
+                {
+                  start: new HourMinute(8, 0, "AM"),
+                  end: new HourMinute(11, 0, "AM"),
+                },
+              ]),
+              Tuesday: new Set([
+                {
+                  start: new HourMinute(8, 0, "AM"),
+                  end: new HourMinute(11, 0, "AM"),
+                },
+              ]),
+              Wednesday: new Set([
+                {
+                  start: new HourMinute(8, 0, "AM"),
+                  end: new HourMinute(11, 0, "AM"),
+                },
+              ]),
+              Thursday: new Set([
+                {
+                  start: new HourMinute(8, 0, "AM"),
+                  end: new HourMinute(11, 0, "AM"),
+                },
+              ]),
+              Friday: new Set([
+                {
+                  start: new HourMinute(8, 0, "AM"),
+                  end: new HourMinute(11, 0, "AM"),
+                },
+              ]),
+              Saturday: new Set([
+                {
+                  start: new HourMinute(8, 0, "AM"),
+                  end: new HourMinute(11, 0, "AM"),
+                },
+              ]),
+              Sunday: new Set([
+                {
+                  start: new HourMinute(8, 0, "AM"),
+                  end: new HourMinute(11, 0, "AM"),
+                },
+              ]),
+              Arranged: new Set([
+                {
+                  start: new HourMinute(8, 0, "AM"),
+                  end: new HourMinute(11, 0, "AM"),
+                },
+              ]),
+            }),
+          ]}
+        />
+      </div>
+
+      <div className={styles.home}>
+        <div className={styles.sidebyside}>
+          <h2>Classes to Add</h2>
+          <button>Add Class</button>
+        </div>
+        <NewClassList />
+      </div>
+
+      <div className={styles.home}>
+        <div className={styles.sidebyside}>
+          <h2>Generated Schedules</h2>
+          <button>Generate Schedule</button>
+        </div>
+      </div>
+      {/* TODO Convert below to a list that maps through generated schedules */}
+      <div className={styles.home}>
+        <div className={styles.sidebyside}>
+          <ScheduleOption />
+          <ScheduleOption />
+          <ScheduleOption />
+          <ScheduleOption />
+        </div>
+      </div>
+
       <button onClick={handleClick}>Click me</button>
     </div>
   );

@@ -4,9 +4,15 @@ import {
   ScheduleType,
   ClassTime,
   Day,
+  Semester,
 } from "./Types";
 import { VTClass, CurrentSchedule } from "./VTClasses";
 import { Set as FrozenSet } from "immutable";
+
+const currentTerm = {
+  year: 2025,
+  semester: Semester.Fall,
+};
 
 class HokieScheduler {
   private VTClasses: Set<VTClassStructure>;
@@ -128,4 +134,4 @@ class HokieScheduler {
   }
 }
 
-export { HokieScheduler };
+export { HokieScheduler, currentTerm };

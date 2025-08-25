@@ -33,6 +33,22 @@ export default function Navbar() {
             </li>
           </>
         )}
+
+        {user && (
+          <>
+            <li>
+              <Link className={styles.link} to="/">
+                Create Schedule
+              </Link>
+            </li>
+            <li>
+              <Link className={styles.link} to="/favorites">
+                Favorites
+              </Link>
+            </li>
+          </>
+        )}
+
         {user && (
           <li>
             {!isPending && (

@@ -1,0 +1,16 @@
+.sidebyside {
+  display: flex;
+}
+.sidebyside * {
+  margin: 0.5rem;
+}
+
+.home {
+  margin: 2rem;
+}
+
+.page {
+  display: block;
+  width: max-content;
+  margin: 0 auto;
+}
