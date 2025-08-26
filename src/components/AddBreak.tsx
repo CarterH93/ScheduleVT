@@ -15,77 +15,71 @@ export default function AddBreak({
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
+    console.log(mondayEnd);
+
+    function parseHourMinute(timeStr: string): HourMinute {
+      const [hourStr, minuteStr] = timeStr.split(":");
+      let hour = parseInt(hourStr);
+      const minute = parseInt(minuteStr);
+      let period = "AM";
+      if (hour === 0) {
+        hour = 12;
+        period = "AM";
+      } else if (hour === 12) {
+        period = "PM";
+      } else if (hour > 12) {
+        hour = hour - 12;
+        period = "PM";
+      }
+      return new HourMinute(hour, minute, period);
+    }
+
     const newBreak = new VTBreak(name, {
-      Monday: new Set([
-        {
-          start: new HourMinute(
-            parseInt(mondayStart.split(":")[0]),
-            parseInt(mondayStart.split(":")[1]),
-            "AM"
-          ),
-          end: new HourMinute(
-            parseInt(mondayEnd.split(":")[0]),
-            parseInt(mondayEnd.split(":")[1]),
-            "AM"
-          ),
-        },
-      ]),
-      Tuesday: new Set([
-        {
-          start: new HourMinute(
-            parseInt(tuesdayStart.split(":")[0]),
-            parseInt(tuesdayStart.split(":")[1]),
-            "AM"
-          ),
-          end: new HourMinute(
-            parseInt(tuesdayEnd.split(":")[0]),
-            parseInt(tuesdayEnd.split(":")[1]),
-            "AM"
-          ),
-        },
-      ]),
-      Wednesday: new Set([
-        {
-          start: new HourMinute(
-            parseInt(wednesdayStart.split(":")[0]),
-            parseInt(wednesdayStart.split(":")[1]),
-            "AM"
-          ),
-          end: new HourMinute(
-            parseInt(wednesdayEnd.split(":")[0]),
-            parseInt(wednesdayEnd.split(":")[1]),
-            "AM"
-          ),
-        },
-      ]),
-      Thursday: new Set([
-        {
-          start: new HourMinute(
-            parseInt(thursdayStart.split(":")[0]),
-            parseInt(thursdayStart.split(":")[1]),
-            "AM"
-          ),
-          end: new HourMinute(
-            parseInt(thursdayEnd.split(":")[0]),
-            parseInt(thursdayEnd.split(":")[1]),
-            "AM"
-          ),
-        },
-      ]),
-      Friday: new Set([
-        {
-          start: new HourMinute(
-            parseInt(fridayStart.split(":")[0]),
-            parseInt(fridayStart.split(":")[1]),
-            "AM"
-          ),
-          end: new HourMinute(
-            parseInt(fridayEnd.split(":")[0]),
-            parseInt(fridayEnd.split(":")[1]),
-            "AM"
-          ),
-        },
-      ]),
+      Monday:
+        mondayStart && mondayEnd
+          ? new Set([
+              {
+                start: parseHourMinute(mondayStart),
+                end: parseHourMinute(mondayEnd),
+              },
+            ])
+          : new Set([]),
+      Tuesday:
+        tuesdayStart && tuesdayEnd
+          ? new Set([
+              {
+                start: parseHourMinute(tuesdayStart),
+                end: parseHourMinute(tuesdayEnd),
+              },
+            ])
+          : new Set([]),
+      Wednesday:
+        wednesdayStart && wednesdayEnd
+          ? new Set([
+              {
+                start: parseHourMinute(wednesdayStart),
+                end: parseHourMinute(wednesdayEnd),
+              },
+            ])
+          : new Set([]),
+      Thursday:
+        thursdayStart && thursdayEnd
+          ? new Set([
+              {
+                start: parseHourMinute(thursdayStart),
+                end: parseHourMinute(thursdayEnd),
+              },
+            ])
+          : new Set([]),
+      Friday:
+        fridayStart && fridayEnd
+          ? new Set([
+              {
+                start: parseHourMinute(fridayStart),
+                end: parseHourMinute(fridayEnd),
+              },
+            ])
+          : new Set([]),
       Saturday: new Set([]),
       Sunday: new Set([]),
       Arranged: new Set([]),
