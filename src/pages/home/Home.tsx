@@ -21,6 +21,7 @@ import styles from "./Home.module.css";
 import Modal from "../../components/Modal";
 import AddNewCRN from "../../components/AddNewCRN";
 import AddBreak from "../../components/AddBreak";
+import AddClass from "../../components/addClass";
 
 export default function Home() {
   async function handleClick(
@@ -113,6 +114,7 @@ export default function Home() {
     []
   );
   const [showAddBreakModal, setShowAddBreakModal] = useState(false);
+  const [showAddClassModal, setShowAddClassModal] = useState(false);
 
   function addCRNClose() {
     setShowAddCRNModal(false);
@@ -120,6 +122,10 @@ export default function Home() {
 
   function addBreakClose() {
     setShowAddBreakModal(false);
+  }
+
+  function addClassClose() {
+    setShowAddClassModal(false);
   }
 
   return (
@@ -137,6 +143,14 @@ export default function Home() {
           <AddBreak
             setCurrentSchedule={setCurrentSchedule}
             setShowAddCRNModal={setShowAddBreakModal}
+          />
+        </Modal>
+      )}
+      {showAddClassModal && (
+        <Modal handleClose={addClassClose}>
+          <AddClass
+            setCurrentSchedule={setCurrentSchedule}
+            setShowAddClassModal={setShowAddClassModal}
           />
         </Modal>
       )}
@@ -169,7 +183,13 @@ export default function Home() {
       <div className={styles.home}>
         <div className={styles.sidebyside}>
           <h2>Classes to Add</h2>
-          <button>Add Class</button>
+          <button
+            onClick={() => {
+              setShowAddClassModal(true);
+            }}
+          >
+            Add Class
+          </button>
         </div>
         <NewClassList />
       </div>

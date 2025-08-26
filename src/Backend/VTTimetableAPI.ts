@@ -69,6 +69,9 @@ async function getCRN(
     "",
     "%"
   );
+  if (crnSearch.length === 0) {
+    throw new Error("CRN not found");
+  }
   return crnSearch[0];
 }
 
@@ -134,7 +137,6 @@ async function searchTimetable(
   if (response === "") {
     return []; // Return empty array if no results found
   }
-
 
   //parse html
   return parseHtmlCourses(response, year, semester);
