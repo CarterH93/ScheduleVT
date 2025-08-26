@@ -29,7 +29,6 @@ export default function AddNewCRN({
 
   return (
     <>
-      {error && <div className="error">{error}</div>}
       <form onSubmit={handleAddCRNClick}>
         <h2>Add New CRN</h2>
         <label className={styles.CRN}>
@@ -43,6 +42,7 @@ export default function AddNewCRN({
         </label>
         <button className="btn"> Add New CRN</button>
       </form>
+      {error && <div className="error">{error}</div>}
     </>
   );
 }
