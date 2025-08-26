@@ -1,0 +1,10 @@
+.sidebyside {
+    display: flex;
+}
+.sidebyside p {
+    padding: 15px;
+}
+
+.name {
+    max-width: 400px;
+}

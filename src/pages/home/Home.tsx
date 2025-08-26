@@ -20,6 +20,7 @@ import ScheduleOption from "../../components/ScheduleOption";
 import styles from "./Home.module.css";
 import Modal from "../../components/Modal";
 import AddNewCRN from "../../components/AddNewCRN";
+import AddBreak from "../../components/AddBreak";
 
 export default function Home() {
   async function handleClick(
@@ -111,9 +112,14 @@ export default function Home() {
   const [currentSchedule, setCurrentSchedule] = useState<VTCourseStructure[]>(
     []
   );
+  const [showAddBreakModal, setShowAddBreakModal] = useState(false);
 
   function addCRNClose() {
     setShowAddCRNModal(false);
+  }
+
+  function addBreakClose() {
+    setShowAddBreakModal(false);
   }
 
   return (
@@ -123,6 +129,14 @@ export default function Home() {
           <AddNewCRN
             setCurrentSchedule={setCurrentSchedule}
             setShowAddCRNModal={setShowAddCRNModal}
+          />
+        </Modal>
+      )}
+      {showAddBreakModal && (
+        <Modal handleClose={addBreakClose}>
+          <AddBreak
+            setCurrentSchedule={setCurrentSchedule}
+            setShowAddCRNModal={setShowAddBreakModal}
           />
         </Modal>
       )}
@@ -141,7 +155,13 @@ export default function Home() {
           >
             Add CRN
           </button>
-          <button>Add Break</button>
+          <button
+            onClick={() => {
+              setShowAddBreakModal(true);
+            }}
+          >
+            Add Break
+          </button>
         </div>
         <Calendar courses={currentSchedule} />
       </div>
