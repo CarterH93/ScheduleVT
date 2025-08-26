@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { currentTerm, HokieScheduler } from "../../Backend/HokieScheduler";
 import {
   CurrentSchedule,
@@ -10,6 +10,7 @@ import {
   HourMinute,
   Semester,
   semesterToString,
+  VTCourseStructure,
   VTSubject,
 } from "../../Backend/Types";
 import { getCRN } from "../../Backend/VTTimetableAPI";
@@ -17,6 +18,8 @@ import Calendar from "../../components/Calendar";
 import NewClassList from "../../components/NewClassList";
 import ScheduleOption from "../../components/ScheduleOption";
 import styles from "./Home.module.css";
+import Modal from "../../components/Modal";
+import AddNewCRN from "../../components/AddNewCRN";
 
 export default function Home() {
   async function handleClick(
@@ -104,8 +107,25 @@ export default function Home() {
     console.log(final);
   }
 
+  const [showAddCRNModal, setShowAddCRNModal] = useState(false);
+  const [currentSchedule, setCurrentSchedule] = useState<VTCourseStructure[]>(
+    []
+  );
+
+  function addCRNClose() {
+    setShowAddCRNModal(false);
+  }
+
   return (
     <div className={styles.page}>
+      {showAddCRNModal && (
+        <Modal handleClose={addCRNClose}>
+          <AddNewCRN
+            setCurrentSchedule={setCurrentSchedule}
+            setShowAddCRNModal={setShowAddCRNModal}
+          />
+        </Modal>
+      )}
       <p>
         Term: {semesterToString(currentTerm.semester)} {currentTerm.year}
       </p>
@@ -114,78 +134,16 @@ export default function Home() {
       <div className={styles.home}>
         <div className={styles.sidebyside}>
           <h2>Current Schedule</h2>
-          <button>Add CRN</button>
+          <button
+            onClick={() => {
+              setShowAddCRNModal(true);
+            }}
+          >
+            Add CRN
+          </button>
           <button>Add Break</button>
         </div>
-        <Calendar
-          courses={[
-            new VTBreak("No afternoons", {
-              Monday: new Set([
-                {
-                  start: new HourMinute(4, 10, "PM"),
-                  end: new HourMinute(6, 0, "PM"),
-                },
-              ]),
-              Tuesday: new Set([]),
-              Wednesday: new Set([]),
-              Thursday: new Set([]),
-              Friday: new Set([]),
-              Saturday: new Set([]),
-              Sunday: new Set([]),
-              Arranged: new Set([]),
-            }),
-            new VTBreak("8 ams", {
-              Monday: new Set([
-                {
-                  start: new HourMinute(8, 0, "AM"),
-                  end: new HourMinute(11, 0, "AM"),
-                },
-              ]),
-              Tuesday: new Set([
-                {
-                  start: new HourMinute(8, 0, "AM"),
-                  end: new HourMinute(11, 0, "AM"),
-                },
-              ]),
-              Wednesday: new Set([
-                {
-                  start: new HourMinute(8, 0, "AM"),
-                  end: new HourMinute(11, 0, "AM"),
-                },
-              ]),
-              Thursday: new Set([
-                {
-                  start: new HourMinute(8, 0, "AM"),
-                  end: new HourMinute(11, 0, "AM"),
-                },
-              ]),
-              Friday: new Set([
-                {
-                  start: new HourMinute(8, 0, "AM"),
-                  end: new HourMinute(11, 0, "AM"),
-                },
-              ]),
-              Saturday: new Set([
-                {
-                  start: new HourMinute(8, 0, "AM"),
-                  end: new HourMinute(11, 0, "AM"),
-                },
-              ]),
-              Sunday: new Set([
-                {
-                  start: new HourMinute(8, 0, "AM"),
-                  end: new HourMinute(11, 0, "AM"),
-                },
-              ]),
-              Arranged: new Set([
-                {
-                  start: new HourMinute(8, 0, "AM"),
-                  end: new HourMinute(11, 0, "AM"),
-                },
-              ]),
-            }),
-          ]}
-        />
+        <Calendar courses={currentSchedule} />
       </div>
 
       <div className={styles.home}>
