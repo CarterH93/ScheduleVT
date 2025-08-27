@@ -1,10 +1,12 @@
 import { VTCourseStructure, VTSubject } from "../Backend/Types";
-import { VTClass } from "../Backend/VTClasses";
+import { VTClass, VTCourse } from "../Backend/VTClasses";
 import { useFetchClass } from "../hooks/useFetchClass";
 import styles from "./AddClass.module.css";
 import Select from "react-select";
 
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import Checkbox from "./Checkbox";
+import { currentTerm } from "../Backend/HokieScheduler";
 
 const subjectOptions = Object.values(VTSubject).map((subject) => ({
   value: subject,
@@ -22,21 +24,68 @@ export default function AddClass({
   const [finalSubject, setFinalSubject] = useState<VTSubject>(VTSubject.AAD);
   const [courseNumber, setCourseNumber] = useState<string>("");
   const [finalCourseNumber, setFinalCourseNumber] = useState<number>(0);
-  const [tempClassList, setTempClassList] = useState<VTClass[]>([]);
+  const [tempCourseList, setTempCourseList] = useState<VTCourse[]>([]);
   const { done, error } = useFetchClass(
     finalSubject,
     finalCourseNumber,
-    setTempClassList
+    setTempCourseList
   );
 
-  function handleAddClassClick(
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) {
+  function handleAddClassClick() {
     setFinalCourseNumber(parseInt(courseNumber));
     setFinalSubject(subject ?? VTSubject.AAD);
   }
 
+  function handleAddSelectionClick() {
+    const selectedCourses = tempCourseList.filter((course) => course.selected);
+
+    const newClass = new VTClass(
+      finalSubject,
+      finalCourseNumber,
+      currentTerm.year,
+      currentTerm.semester
+    );
+    for (const course of selectedCourses) {
+      newClass.addCourse(course);
+    }
+
+    setClassList((prevClasses) => {
+      return [...prevClasses, newClass];
+    });
+    setShowAddClassModal(false);
+  }
+
   //TODO Add ability to select which CRNs to add to final selection
+
+  function updateCheckStatus(index: number) {
+    setTempCourseList(
+      tempCourseList.map((vtCourse, currentIndex) => {
+        if (currentIndex === index) {
+          vtCourse.selected = !vtCourse.selected;
+          return vtCourse;
+        } else {
+          return vtCourse;
+        }
+      })
+    );
+  }
+
+  const selectAll = () => {
+    setTempCourseList(
+      tempCourseList.map((vtCourse) => {
+        vtCourse.selected = true;
+        return vtCourse;
+      })
+    );
+  };
+  const unSelectAll = () => {
+    setTempCourseList(
+      tempCourseList.map((vtCourse) => {
+        vtCourse.selected = false;
+        return vtCourse;
+      })
+    );
+  };
 
   return (
     <div>
@@ -57,26 +106,38 @@ export default function AddClass({
           onChange={(option) => setSubject(option?.value ?? null)}
         />
       </label>
-      {tempClassList.length > 0 &&
-        tempClassList.map((vtClass, index) => (
-          <div key={index} className={styles.classCard}>
-            <h3>
-              {vtClass.subject} {vtClass.courseNumber}
-            </h3>
-            {vtClass.courses.map((course, courseIndex) => (
-              <div key={courseIndex} className={styles.courseCard}>
-                <p>CRN: {course.id}</p>
-              </div>
-            ))}
-          </div>
-        ))}
+
+      {tempCourseList.length > 0 && (
+        <>
+          <p>
+            <button onClick={selectAll}>Select All</button>
+            <button onClick={unSelectAll}>Unselect All</button>
+          </p>
+
+          {tempCourseList.map((vtCourse, index) => (
+            <div>
+              <Checkbox
+                vtCourse={vtCourse}
+                checkHandler={() => updateCheckStatus(index)}
+                index={index}
+              />
+            </div>
+          ))}
+        </>
+      )}
+
       {!done && (
         <button className="btn" onClick={handleAddClassClick}>
           {" "}
           Find Class
         </button>
       )}
-      {done && <button className="btn"> Add Selections</button>}
+      {done && (
+        <button className="btn" onClick={handleAddSelectionClick}>
+          {" "}
+          Add Selections
+        </button>
+      )}
 
       {error && <div className="error">{error}</div>}
     </div>

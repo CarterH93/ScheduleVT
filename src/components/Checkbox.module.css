@@ -1,0 +1,12 @@
+.checkbox {
+  display: flex;
+  margin: 10px auto;
+  max-width: 200px;
+}
+
+.checkbox input {
+  height: 20px;
+}
+.checkbox * {
+    margin: 5px;
+}

@@ -33,7 +33,6 @@ import {
  * @method removeCourse - Removes a course from the class by its ID.
  */
 class VTClass implements VTClassStructure {
-  public selected: boolean = true;
   private _courses: VTCourse[];
   private _subject: VTSubject;
   private _courseNumber: number;
@@ -99,6 +98,7 @@ class VTClass implements VTClassStructure {
 }
 
 class VTCourse implements VTCourseStructure {
+  public selected: boolean = true;
   private _name: string;
   private _id: number;
   private _subject: VTSubject;

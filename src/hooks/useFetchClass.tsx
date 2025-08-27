@@ -9,7 +9,7 @@ import { setCommentRange } from "typescript";
 export const useFetchClass = (
   subject: VTSubject,
   courseNumber: number,
-  setClassList: Dispatch<SetStateAction<VTClass[]>>
+  setCourseList: Dispatch<SetStateAction<VTCourse[]>>
 ) => {
   const [error, setError] = useState<string | null>(null);
   const [done, setDone] = useState(false);
@@ -31,10 +31,7 @@ export const useFetchClass = (
           throw new Error("Class not found");
         }
 
-        setClassList((prevClassList) => {
-          const updatedClassList = [...prevClassList, ClassResponse];
-          return updatedClassList;
-        });
+        setCourseList(ClassResponse.courses)
 
         setDone(false);
         setError(null);
@@ -56,7 +53,7 @@ export const useFetchClass = (
     return () => {
       controller.abort();
     };
-  }, [subject, courseNumber, setClassList]);
+  }, [subject, courseNumber, setCourseList]);
 
   return { done, error };
 };
