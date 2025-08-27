@@ -21,15 +21,18 @@ import styles from "./Home.module.css";
 import Modal from "../../components/Modal";
 import AddNewCRN from "../../components/AddNewCRN";
 import AddBreak from "../../components/AddBreak";
-import AddClass from "../../components/addClass";
+import AddClass from "../../components/AddClass";
 
 export default function Home() {
   const [showAddCRNModal, setShowAddCRNModal] = useState(false);
+
+  const [showAddBreakModal, setShowAddBreakModal] = useState(false);
+  const [showAddClassModal, setShowAddClassModal] = useState(false);
+
+  const [classList, setClassList] = useState<VTClass[]>([]);
   const [currentSchedule, setCurrentSchedule] = useState<VTCourseStructure[]>(
     []
   );
-  const [showAddBreakModal, setShowAddBreakModal] = useState(false);
-  const [showAddClassModal, setShowAddClassModal] = useState(false);
 
   function addCRNClose() {
     setShowAddCRNModal(false);
@@ -64,7 +67,7 @@ export default function Home() {
       {showAddClassModal && (
         <Modal handleClose={addClassClose}>
           <AddClass
-            setCurrentSchedule={setCurrentSchedule}
+            setClassList={setClassList}
             setShowAddClassModal={setShowAddClassModal}
           />
         </Modal>
@@ -106,7 +109,7 @@ export default function Home() {
             Add Class
           </button>
         </div>
-        <NewClassList />
+        <NewClassList classList={classList} />
       </div>
 
       <div className={styles.home}>
