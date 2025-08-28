@@ -1,0 +1,36 @@
+/* Container for the schedule */
+.scheduleContainer {
+  background: #f8f9fa;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 24px;
+  margin: 16px 0;
+}
+
+/* Each course item */
+.courseItem {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  padding: 16px;
+  transition: box-shadow 0.2s;
+}
+.courseItem:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  border-color: #b3b3b3;
+}
+
+/* Course name */
+.courseName {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 4px;
+}
+
+/* Course ID */
+.courseId {
+  font-size: 0.95rem;
+  color: #718096;
+}

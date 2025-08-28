@@ -1,5 +1,8 @@
 .sidebyside {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }
 .sidebyside * {
   margin: 0.5rem;
@@ -9,8 +12,14 @@
   margin: 2rem;
 }
 
+.page * {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
 .page {
   display: block;
-  width: max-content;
+  width: 100%;
   margin: 0 auto;
 }

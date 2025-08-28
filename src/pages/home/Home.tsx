@@ -22,6 +22,7 @@ import Modal from "../../components/Modal";
 import AddNewCRN from "../../components/AddNewCRN";
 import AddBreak from "../../components/AddBreak";
 import AddClass from "../../components/AddClass";
+import { useGenerateSchedule } from "../../hooks/useGenerateSchedules";
 
 export default function Home() {
   const [showAddCRNModal, setShowAddCRNModal] = useState(false);
@@ -32,6 +33,19 @@ export default function Home() {
   const [classList, setClassList] = useState<VTClass[]>([]);
   const [currentSchedule, setCurrentSchedule] = useState<VTCourseStructure[]>(
     []
+  );
+
+  const [generatedSchedules, setGeneratedSchedules] = useState<
+    VTCourseStructure[][]
+  >([[]]);
+
+  const [generate, setGenerate] = useState(false);
+
+  const { done, error } = useGenerateSchedule(
+    setGeneratedSchedules,
+    classList,
+    currentSchedule,
+    generate
   );
 
   function addCRNClose() {
@@ -115,18 +129,32 @@ export default function Home() {
       <div className={styles.home}>
         <div className={styles.sidebyside}>
           <h2>Generated Schedules</h2>
-          <button>Generate Schedule</button>
+          <button
+            onClick={() => {
+              setGenerate(true);
+            }}
+          >
+            Generate Schedule
+          </button>
         </div>
       </div>
-      {/* TODO Convert below to a list that maps through generated schedules */}
-      <div className={styles.home}>
-        <div className={styles.sidebyside}>
-          <ScheduleOption />
-          <ScheduleOption />
-          <ScheduleOption />
-          <ScheduleOption />
+      {generatedSchedules.length >= 50 && (
+        <div className={styles.home}>
+          <p>
+            Showing only 50 combinations. Try changing your settings to refine
+            your choices
+          </p>
+
+          {generatedSchedules.length > 0 && (
+            <div className={styles.sidebyside}>
+              {generatedSchedules.map((schedule, index) => (
+                <ScheduleOption key={index} schedule={schedule} />
+              ))}
+            </div>
+          )}
         </div>
-      </div>
+      )}
+      {error && <div className="error">{error}</div>}
     </div>
   );
 }

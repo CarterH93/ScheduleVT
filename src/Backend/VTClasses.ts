@@ -8,6 +8,12 @@ import {
   getUniqueId,
 } from "./Types";
 
+function stringSchedule(course: VTCourseStructure): string {
+  //TODO implement this method
+  //Creates a string representation of the schedule
+  return "temp schedule description";
+}
+
 /**
  * Represents a Virginia Tech class, encapsulating its subject, course number, year, semester, and associated courses.
  *
@@ -147,12 +153,6 @@ class VTCourse implements VTCourseStructure {
   public get type(): CourseType {
     return this._type;
   }
-
-  public get stringSchedule(): string {
-    //TODO implement this method
-    //Creates a string representation of the schedule
-    throw new Error("Method not implemented.");
-  }
 }
 
 /**
@@ -185,6 +185,10 @@ class CurrentSchedule implements VTClassStructure {
 
   public addCourse(course: VTCourseStructure): void {
     this._courses.push(course);
+  }
+
+  public setCourses(courses: VTCourseStructure[]): void {
+    this._courses = courses;
   }
 
   public removeCourse(id: number) {
@@ -239,4 +243,4 @@ class VTBreak implements VTCourseStructure {
     return this._schedule;
   }
 }
-export { VTClass, VTCourse, CurrentSchedule, VTBreak };
+export { VTClass, VTCourse, CurrentSchedule, VTBreak, stringSchedule };

@@ -55,7 +55,6 @@ export default function AddClass({
     setShowAddClassModal(false);
   }
 
-  //TODO Add ability to select which CRNs to add to final selection
 
   function updateCheckStatus(index: number) {
     setTempCourseList(

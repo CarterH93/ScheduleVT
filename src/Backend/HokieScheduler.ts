@@ -60,7 +60,7 @@ class HokieScheduler {
   ): void {
     const courses = VTClasses[index].courses;
     for (const course of courses) {
-      if (this.courseCombinations.length >= 100) {
+      if (this.courseCombinations.length >= 50) {
         // We have found 100 possible schedules. Stop the recursion.
         return;
       } else if (index === VTClasses.length - 1) {
