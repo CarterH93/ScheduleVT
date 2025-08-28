@@ -246,6 +246,8 @@ export function parseHtmlCourses(
       const mainStartStr = timeTableData[9];
       const mainEndStr = timeTableData[10];
 
+
+try {
       const mainClassTime: ClassTime = {
         start: new HourMinute(
           Number(mainStartStr.split(":")[0]),
@@ -264,12 +266,16 @@ export function parseHtmlCourses(
 
         schedule[convertedDay].add(mainClassTime);
       }
+    } catch (e) {
+      //just skip adding the class time if there is an error (usually due to bad formatting)
+    }
 
-      if (extraClassData) {
+      if (extraClassData && extraClassData[5] !=="N/A" && extraClassData[6] !=="N/A" && extraClassData[7] !=="N/A") {
         const additionalDays = extraClassData[5].split(" ");
 
         const additionalStartStr = extraClassData[6];
         const additionalEndStr = extraClassData[7];
+
 
         const additionalClassTime: ClassTime = {
           start: new HourMinute(

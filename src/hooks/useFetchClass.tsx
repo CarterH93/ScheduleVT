@@ -37,6 +37,7 @@ export const useFetchClass = (
         setError(null);
         setDone(true);
       } catch (error) {
+        console.log(error);
         if (error instanceof DOMException && error.name === "AbortError") {
           console.log("Fetch aborted");
         } else {

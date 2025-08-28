@@ -138,23 +138,35 @@ export default function Home() {
           </button>
         </div>
       </div>
-      {generatedSchedules.length >= 50 && (
+      <div>
+      {done && generatedSchedules.length > 0 && (
+      
         <div className={styles.home}>
+          {generatedSchedules.length >= 50 && (
           <p>
             Showing only 50 combinations. Try changing your settings to refine
             your choices
           </p>
+           )}
+          
+         
 
-          {generatedSchedules.length > 0 && (
+          
+
+          
             <div className={styles.sidebyside}>
               {generatedSchedules.map((schedule, index) => (
                 <ScheduleOption key={index} schedule={schedule} />
               ))}
             </div>
-          )}
+         
+           
         </div>
-      )}
-      {error && <div className="error">{error}</div>}
-    </div>
+         )}
+         {done && generatedSchedules.length === 0 && (
+          <p>No possible schedules found. Try changing your settings</p>)}
+          {error && <div className="error">{error}</div>}
+         </div>
+     </div>
   );
 }
