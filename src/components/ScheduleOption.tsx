@@ -7,9 +7,11 @@ import React from "react";
 //TODO Implement showing the popup calendar view
 
 export default function ScheduleOption({
-  schedule,
+  schedule, setShowCalendarView, setCalendarViewToShow
 }: {
-  schedule: VTCourseStructure[];
+  schedule: VTCourseStructure[],
+  setShowCalendarView: React.Dispatch<React.SetStateAction<boolean>>,
+  setCalendarViewToShow: React.Dispatch<React.SetStateAction<VTCourseStructure[]>>,
 }) {
   return (
     <div className={styles.scheduleContainer}>
@@ -20,7 +22,10 @@ export default function ScheduleOption({
           <p className={styles.courseId}>Schedule: {stringSchedule(course)}</p>
         </div>
       ))}
-      <button >Show Calendar View</button>
+      <button onClick={() => {
+        setShowCalendarView(true);
+        setCalendarViewToShow(schedule);
+      }} >Show Calendar View</button>
     </div>
   );
 }

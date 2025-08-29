@@ -41,6 +41,11 @@ export default function Home() {
 
   const [generate, setGenerate] = useState(false);
 
+  const [showCalendarView, setShowCalendarView] = useState(false);
+  const [calendarViewToShow, setCalendarViewToShow] = useState<
+    VTCourseStructure[]
+  >([]);
+
   const { done, error } = useGenerateSchedule(
     setGeneratedSchedules,
     classList,
@@ -58,6 +63,10 @@ export default function Home() {
 
   function addClassClose() {
     setShowAddClassModal(false);
+  }
+
+  function calendarViewClose() {
+    setShowCalendarView(false);
   }
 
   return (
@@ -84,6 +93,11 @@ export default function Home() {
             setClassList={setClassList}
             setShowAddClassModal={setShowAddClassModal}
           />
+        </Modal>
+      )}
+      {showCalendarView && (
+        <Modal handleClose={calendarViewClose}>
+          <Calendar courses={calendarViewToShow} />
         </Modal>
       )}
       <p>
@@ -139,34 +153,32 @@ export default function Home() {
         </div>
       </div>
       <div>
-      {done && generatedSchedules.length > 0 && (
-      
-        <div className={styles.home}>
-          {generatedSchedules.length >= 50 && (
-          <p>
-            Showing only 50 combinations. Try changing your settings to refine
-            your choices
-          </p>
-           )}
-          
-         
+        {done && generatedSchedules.length > 0 && (
+          <div className={styles.home}>
+            {generatedSchedules.length >= 50 && (
+              <p>
+                Showing only 50 combinations. Try changing your settings to
+                refine your choices
+              </p>
+            )}
 
-          
-
-          
             <div className={styles.sidebyside}>
               {generatedSchedules.map((schedule, index) => (
-                <ScheduleOption key={index} schedule={schedule} />
+                <ScheduleOption
+                  key={index}
+                  schedule={schedule}
+                  setCalendarViewToShow={setCalendarViewToShow}
+                  setShowCalendarView={setShowCalendarView}
+                />
               ))}
             </div>
-         
-           
-        </div>
-         )}
-         {done && generatedSchedules.length === 0 && (
-          <p>No possible schedules found. Try changing your settings</p>)}
-          {error && <div className="error">{error}</div>}
-         </div>
-     </div>
+          </div>
+        )}
+        {done && generatedSchedules.length === 0 && (
+          <p>No possible schedules found. Try changing your settings</p>
+        )}
+        {error && <div className="error">{error}</div>}
+      </div>
+    </div>
   );
 }

@@ -43,7 +43,7 @@ export const useGenerateSchedule = (
           console.log("Fetch aborted");
         } else {
           setDone(false);
-          setError("Invalid CRN");
+          setError("Error generating schedules. Please fix chosen options above.");
         }
       }
     }
