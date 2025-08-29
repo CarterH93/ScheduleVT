@@ -12,7 +12,7 @@ export default function Checkbox({ vtCourse, checkHandler, index }: { vtCourse: 
         checked={vtCourse.selected}
         onChange={checkHandler}
       />
-      <label htmlFor={`checkbox-${index}`}>{vtCourse.id}</label>
+      <label htmlFor={`checkbox-${index}`}>{vtCourse.id}{":   "}{vtCourse.type}</label>
     </div>
   )
 }
