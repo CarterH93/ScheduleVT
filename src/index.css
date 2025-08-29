@@ -40,18 +40,30 @@ ul {
   color: var(--heading-color);
   display: inline-block;
 }
-.btn {
+button {
   background: #fff;
-  padding: 8px 12px;
-  border-radius: 4px;
+  padding: 10px 20px;
+  border-radius: 6px;
   color: var(--primary-color);
   cursor: pointer;
   font-size: 1em;
-  border: 1px solid var(--primary-color);
+  border: 1.5px solid var(--primary-color);
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 102, 255, 0.08);
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s, border 0.2s;
+  margin: 10px;
 }
-.btn:hover {
+button:hover {
   color: #fff;
   background-color: var(--primary-color);
+  box-shadow: 0 4px 16px rgba(0, 102, 255, 0.15);
+  border-color: #0052cc;
+}
+/* focus style for accessibility */
+button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.2);
+  border-color: #0052cc;
 }
 
 /* forms */

@@ -109,8 +109,8 @@ export default function AddClass({
       {tempCourseList.length > 0 && (
         <>
           <p>
-            <button onClick={selectAll}>Select All</button>
-            <button onClick={unSelectAll}>Unselect All</button>
+            <button className={styles.btn} onClick={selectAll}>Select All</button>
+            <button className={styles.btn} onClick={unSelectAll}>Unselect All</button>
           </p>
 
           {tempCourseList.map((vtCourse, index) => (
@@ -126,13 +126,13 @@ export default function AddClass({
       )}
 
       {!done && (
-        <button className="btn" onClick={handleAddClassClick}>
+        <button className={styles.btn} onClick={handleAddClassClick}>
           {" "}
           Find Class
         </button>
       )}
       {done && (
-        <button className="btn" onClick={handleAddSelectionClick}>
+        <button className={styles.btn} onClick={handleAddSelectionClick}>
           {" "}
           Add Selections
         </button>
