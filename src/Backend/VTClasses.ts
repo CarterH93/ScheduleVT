@@ -9,9 +9,27 @@ import {
 } from "./Types";
 
 function stringSchedule(course: VTCourseStructure): string {
-  //TODO implement this method
-  //Creates a string representation of the schedule
-  return "temp schedule description";
+  // Creates a string representation of the schedule
+  const schedule = course.schedule;
+  let result: string[] = [];
+  // Use Day enum values for type safety
+  const days = Object.values((require("./Types") as any).Day || {});
+  for (const day of days) {
+    const times = schedule[day as keyof typeof schedule] as Set<{
+      start: any;
+      end: any;
+    }>;
+    if (times && times.size > 0) {
+      const timeStrings: string[] = [];
+      times.forEach((classTime: { start: any; end: any }) => {
+        timeStrings.push(
+          `${classTime.start.toString(true)} - ${classTime.end.toString(true)}`
+        );
+      });
+      result.push(`${day}: ${timeStrings.join(", ")}`);
+    }
+  }
+  return result.length > 0 ? result.join("; ") : "No scheduled times";
 }
 
 /**

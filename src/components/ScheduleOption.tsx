@@ -4,8 +4,6 @@ import styles from "./ScheduleOption.module.css";
 
 import React from "react";
 
-//TODO Implement showing the popup calendar view
-
 export default function ScheduleOption({
   schedule, setShowCalendarView, setCalendarViewToShow
 }: {
