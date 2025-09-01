@@ -25,9 +25,9 @@ export default function ScheduleOption({
   function toStringFavorites(courses: VTCourseStructure[]) {
     let final = "";
     courses.forEach((course) => {
-      final += `Name: ${course.name} CRN: ${
+      final += `Name: ${course.name}    CRN: ${
         course.id
-      } Schedule: ${stringSchedule(course)}`;
+      } \n Schedule: ${stringSchedule(course)}`;
       final += "\n\n";
     });
 
@@ -36,6 +36,9 @@ export default function ScheduleOption({
 
   function onClickHandler() {
     if (document) {
+      if (!document.favoriteSchedules) {
+        document.favoriteSchedules = [];
+      }
       updateDocument(user?.uid as string, {
         favoriteSchedules: [
           ...document.favoriteSchedules,
