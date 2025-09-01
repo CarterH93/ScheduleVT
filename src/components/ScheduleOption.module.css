@@ -34,3 +34,8 @@
   font-size: 0.95rem;
   color: #718096;
 }
+
+.favorite {
+  display: flex;
+  justify-content: flex-end;
+}
