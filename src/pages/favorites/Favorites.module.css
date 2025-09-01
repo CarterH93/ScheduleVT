@@ -1,3 +1,6 @@
+.page {
+    margin: 20px;
+}
 .favorites {
   white-space: pre-line; /* Preserves line breaks and collapses multiple spaces */
   padding: 1rem 1.5rem;

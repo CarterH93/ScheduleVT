@@ -26,8 +26,12 @@ export default function Favorites() {
   }
 
   return (
-    <div>
-      {document &&
+    <div className={styles.page}>
+      {error && <p className="error">{error}</p>}
+      {document && (!document.favoriteSchedules || document.favoriteSchedules.length === 0) && (
+        <p>No Favorite Schedules Found.</p>
+      )}
+      {document && document.favoriteSchedules &&
         document.favoriteSchedules.length > 0 &&
         document.favoriteSchedules.map((schedule: string, index: number) => (
           <div className={styles.favorites} key={index}>
