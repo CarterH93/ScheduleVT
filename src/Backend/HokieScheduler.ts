@@ -10,8 +10,8 @@ import { VTClass, CurrentSchedule } from "./VTClasses";
 import { Set as FrozenSet } from "immutable";
 
 const currentTerm = {
-  year: 2025,
-  semester: Semester.Fall,
+  year: 2026,
+  semester: Semester.Spring,
 };
 
 class HokieScheduler {
