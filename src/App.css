@@ -1,0 +1,11 @@
+.App {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+@media (max-width: 768px) {
+  .App {
+    padding: 1.5rem 1rem 3rem;
+  }
+}
