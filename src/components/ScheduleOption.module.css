@@ -1,41 +1,49 @@
-/* Container for the schedule */
 .scheduleContainer {
-  background: #f8f9fa;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 24px;
+  box-shadow: 0 16px 32px rgba(15, 23, 42, 0.1);
   padding: 24px;
   margin: 16px 0;
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
-/* Each course item */
 .courseItem {
-  background: #fff;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  margin-bottom: 12px;
-  padding: 16px;
-  transition: box-shadow 0.2s;
-}
-.courseItem:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-  border-color: #b3b3b3;
+  background: rgba(99, 102, 241, 0.05);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: 18px;
+  padding: 16px 20px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Course name */
+.courseItem:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(99, 102, 241, 0.18);
+}
+
 .courseName {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #2d3748;
-  margin-bottom: 4px;
+  color: var(--heading-color);
+  margin-bottom: 6px;
 }
 
-/* Course ID */
 .courseId {
   font-size: 0.95rem;
-  color: #718096;
+  color: var(--text-muted);
 }
 
 .favorite {
   display: flex;
-  justify-content: flex-end !important;
+  justify-content: flex-end;
+}
+
+.favorite button {
+  margin: 0;
+}
+
+.scheduleContainer > button {
+  align-self: flex-start;
 }

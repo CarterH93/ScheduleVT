@@ -102,37 +102,44 @@ export default function AddClass({
         <span>Subject</span>
         <Select
           options={subjectOptions}
+          classNamePrefix="react-select"
           onChange={(option) => setSubject(option?.value ?? null)}
         />
       </label>
 
       {tempCourseList.length > 0 && (
         <>
-          <p>
-            <button className={styles.btn} onClick={selectAll}>Select All</button>
-            <button className={styles.btn} onClick={unSelectAll}>Unselect All</button>
-          </p>
+          <div className={styles.actions}>
+            <button className="btn" onClick={selectAll}>
+              Select All
+            </button>
+            <button className="btn" onClick={unSelectAll}>
+              Unselect All
+            </button>
+          </div>
 
-          {tempCourseList.map((vtCourse, index) => (
-            <div>
-              <Checkbox
-                vtCourse={vtCourse}
-                checkHandler={() => updateCheckStatus(index)}
-                index={index}
-              />
-            </div>
-          ))}
+          <div className={styles.courseList}>
+            {tempCourseList.map((vtCourse, index) => (
+              <div key={index}>
+                <Checkbox
+                  vtCourse={vtCourse}
+                  checkHandler={() => updateCheckStatus(index)}
+                  index={index}
+                />
+              </div>
+            ))}
+          </div>
         </>
       )}
 
       {!done && (
-        <button className={styles.btn} onClick={handleAddClassClick}>
+        <button className="btn" onClick={handleAddClassClick}>
           {" "}
           Find Class
         </button>
       )}
       {done && (
-        <button className={styles.btn} onClick={handleAddSelectionClick}>
+        <button className="btn" onClick={handleAddSelectionClick}>
           {" "}
           Add Selections
         </button>
