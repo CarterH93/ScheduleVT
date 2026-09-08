@@ -162,16 +162,16 @@ export default function Home() {
               </p>
             )}
 
-            <div className={styles.sidebyside}>
-              {generatedSchedules.map((schedule, index) => (
-                <ScheduleOption
-                  key={index}
-                  schedule={schedule}
-                  setCalendarViewToShow={setCalendarViewToShow}
-                  setShowCalendarView={setShowCalendarView}
-                />
-              ))}
-            </div>
+          <div className={styles.generatedSchedules}>
+            {generatedSchedules.map((schedule, index) => (
+              <ScheduleOption
+                key={index}
+                schedule={schedule}
+                setCalendarViewToShow={setCalendarViewToShow}
+                setShowCalendarView={setShowCalendarView}
+              />
+            ))}
+          </div>
           </div>
         )}
         {done && generatedSchedules.length === 0 && (

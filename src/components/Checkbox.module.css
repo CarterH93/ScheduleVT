@@ -1,26 +1,24 @@
 .checkbox {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 8px 16px;
-  border-radius: 6px;
-  background: #f7f7fa;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
-  margin: 10px auto;
-  max-width: 250px;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 16px;
+  background: rgba(99, 102, 241, 0.08);
+  border: 1px solid rgba(99, 102, 241, 0.18);
+  margin: 0;
 }
 
 .checkbox input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
-  accent-color: #0080ff;
+  width: 20px;
+  height: 20px;
+  accent-color: #6366f1;
   cursor: pointer;
-  margin-right: 8px;
 }
 
 .checkbox label {
-  font-size: 1rem;
-  color: #222;
+  font-size: 0.98rem;
+  color: var(--heading-color);
   cursor: pointer;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.3px;
 }
